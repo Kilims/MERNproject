@@ -22,20 +22,9 @@ render(
     document.getElementById('app')
 );
 
-store.dispatch(postBooks(
-    [{
-        id: 1,
-        title: 'this is book title',
-        description: 'this is book des',
-        price: 111.11
-    },
-    {
-        id: 2,
-        title: 'this is book title',
-        description: 'this is book des',
-        price: 222.22
-    }]
-));
+// store.dispatch(postBooks(
+    
+// ));
 
 // store.dispatch(postBooks(
 //     [{
