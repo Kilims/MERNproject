@@ -755,6 +755,14 @@ store.dispatch({
     }
 });
 
+//=========cart
+store.dispatch({
+    type: "ADD_TO_CART",
+    payload: [{
+        id: 2
+    }]
+});
+
 /***/ }),
 /* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -1380,8 +1388,11 @@ var _redux = __webpack_require__(8);
 
 var _booksReducers = __webpack_require__(25);
 
+var _cartReducers = __webpack_require__(26);
+
 exports.default = (0, _redux.combineReducers)({
-    books: _booksReducers.booksReducers
+    books: _booksReducers.booksReducers,
+    cart: _cartReducers.cartReducers
 });
 
 /***/ }),
@@ -1430,6 +1441,34 @@ function booksReducers() {
             break;
     }
 
+    return state;
+}
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.cartReducers = cartReducers;
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function cartReducers() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { cart: [] };
+    var action = arguments[1];
+
+    switch (action.type) {
+        case "ADD_TO_CART":
+            return { cart: [].concat(_toConsumableArray(state.cart), _toConsumableArray(action.payload)) };
+
+        default:
+            break;
+    }
     return state;
 }
 
