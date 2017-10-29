@@ -705,6 +705,10 @@ var _index = __webpack_require__(24);
 
 var _index2 = _interopRequireDefault(_index);
 
+var _cartActions = __webpack_require__(27);
+
+var _booksActions = __webpack_require__(28);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var store = (0, _redux.createStore)(_index2.default);
@@ -713,55 +717,38 @@ store.subscribe(function () {
     console.log('current state is : ', store.getState());
 });
 
-store.dispatch({
-    type: "POST_BOOK",
-    payload: [{
-        id: 1,
-        title: 'this is book title',
-        description: 'this is book des',
-        price: 111.11
-    }, {
-        id: 2,
-        title: 'this is book title',
-        description: 'this is book des',
-        price: 222.22
-    }]
-});
+store.dispatch((0, _booksActions.postBooks)([{
+    id: 1,
+    title: 'this is book title',
+    description: 'this is book des',
+    price: 111.11
+}, {
+    id: 2,
+    title: 'this is book title',
+    description: 'this is book des',
+    price: 222.22
+}]));
 
-store.dispatch({
-    type: "POST_BOOK",
-    payload: [{
-        id: 3,
-        title: 'this is book title',
-        description: 'this is book des',
-        price: 333.33
-    }]
-});
+store.dispatch((0, _booksActions.postBooks)([{
+    id: 3,
+    title: 'this is book title',
+    description: 'this is book des',
+    price: 333.33
+}]));
 
-store.dispatch({
-    type: "DELETE_BOOK",
-    payload: {
-        id: 1
-    }
-});
+store.dispatch((0, _booksActions.deleteBooks)({
+    id: 1
+}));
 
-store.dispatch({
-    type: "UPDATE_BOOK",
-    payload: {
-        id: 3,
-        title: 'update book title',
-        description: 'this is book des',
-        price: 444.444
-    }
-});
+store.dispatch((0, _booksActions.updateBook)({
+    id: 3,
+    title: 'update book title',
+    description: 'this is book des',
+    price: 444.444
+}));
 
 //=========cart
-store.dispatch({
-    type: "ADD_TO_CART",
-    payload: [{
-        id: 2
-    }]
-});
+store.dispatch((0, _cartActions.addToCart)([{ id: 3 }]));
 
 /***/ }),
 /* 8 */
@@ -1470,6 +1457,58 @@ function cartReducers() {
             break;
     }
     return state;
+}
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.addToCart = addToCart;
+function addToCart(book) {
+    return {
+        type: "ADD_TO_CART",
+        payload: book
+    };
+}
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.postBooks = postBooks;
+exports.deleteBooks = deleteBooks;
+exports.updateBook = updateBook;
+function postBooks(book) {
+    return {
+        type: "POST_BOOK",
+        payload: book
+    };
+}
+
+function deleteBooks(id) {
+    return {
+        type: "DELETE_BOOK",
+        payload: id
+    };
+}
+
+function updateBook(book) {
+    return {
+        type: "UPDATE_BOOK",
+        payload: book
+    };
 }
 
 /***/ })
