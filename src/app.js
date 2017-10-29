@@ -1,11 +1,13 @@
 "use strict"
-import {createStore} from 'redux';
+import {applyMiddleware, createStore} from 'redux';
+import logger from 'redux-logger';
 
 import reducers from './reducers/index';
 import {addToCart} from './actions/cartActions';
 import {postBooks, deleteBooks, updateBook} from './actions/booksActions';
 
-const store = createStore(reducers);
+const middleware = applyMiddleware(logger);
+const store = createStore(reducers, middleware);
 
 store.subscribe(function() {
     console.log('current state is : ', store.getState());
