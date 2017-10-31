@@ -9660,10 +9660,18 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.addToCart = addToCart;
+exports.deleteCartItem = deleteCartItem;
 function addToCart(book) {
     return {
         type: "ADD_TO_CART",
         payload: book
+    };
+}
+
+function deleteCartItem(cart) {
+    return {
+        type: "DELE_CART_ITEM",
+        payload: cart
     };
 }
 
@@ -40165,12 +40173,12 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 function booksReducers() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { books: [{
-            id: 1,
+            _id: 1,
             title: 'this is book title',
             description: 'this is book des',
             price: 111.12
         }, {
-            id: 2,
+            _id: 2,
             title: 'this is book title',
             description: 'this is book des',
             price: 222.22
@@ -40190,13 +40198,13 @@ function booksReducers() {
         case "DELETE_BOOK":
             var currentBookToDelete = [].concat(_toConsumableArray(state.books));
             var indexToDelete = currentBookToDelete.findIndex(function (book) {
-                return book.id === action.payload.id;
+                return book._id === action.payload._id;
             });
             return { books: [].concat(_toConsumableArray(currentBookToDelete.slice(0, indexToDelete)), _toConsumableArray(currentBookToDelete.slice(indexToDelete + 1))) };
         case "UPDATE_BOOK":
             var currentBookToUpdate = [].concat(_toConsumableArray(state.books));
             var indexToUpdate = currentBookToUpdate.findIndex(function (book) {
-                return book.id === action.payload.id;
+                return book._id === action.payload._id;
             });
             var newBookToUpdate = _extends({}, currentBookToUpdate[indexToUpdate], {
                 title: action.payload.title
@@ -40231,7 +40239,8 @@ function cartReducers() {
     switch (action.type) {
         case "ADD_TO_CART":
             return { cart: [].concat(_toConsumableArray(state), _toConsumableArray(action.payload)) };
-
+        case "DELE_CART_ITEM":
+            return { cart: [].concat(_toConsumableArray(state), _toConsumableArray(action.payload)) };
         default:
             break;
     }
@@ -51864,7 +51873,13 @@ var _reactRedux = __webpack_require__(86);
 
 var _reactBootstrap = __webpack_require__(112);
 
+var _redux = __webpack_require__(73);
+
+var _cartActions = __webpack_require__(229);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -51882,6 +51897,17 @@ var Cart = function (_React$Component) {
     }
 
     _createClass(Cart, [{
+        key: 'onDelete',
+        value: function onDelete(_id) {
+            var currentBookToDelete = this.props.cart;
+            var indexToDelete = currentBookToDelete.findIndex(function (cart) {
+                return cart._id === _id;
+            });
+            var cartAfterDelete = [].concat(_toConsumableArray(currentBookToDelete.slice(0, indexToDelete)), _toConsumableArray(currentBookToDelete.slice(indexToDelete + 1)));
+
+            this.props.deleteCartItem(cartAfterDelete);
+        }
+    }, {
         key: 'render',
         value: function render() {
             if (this.props.cart[0]) {
@@ -51963,14 +51989,14 @@ var Cart = function (_React$Component) {
                                 ),
                                 _react2.default.createElement(
                                     _reactBootstrap.Button,
-                                    { bsStyle: 'danger', bsSize: 'small' },
+                                    { onClick: this.onDelete.bind(this, cartArr._id), bsStyle: 'danger', bsSize: 'small' },
                                     'DELETE'
                                 )
                             )
                         )
                     )
                 );
-            });
+            }, this);
             return _react2.default.createElement(
                 _reactBootstrap.Panel,
                 { header: 'Cart', bsStyle: 'primary' },
@@ -51988,7 +52014,13 @@ function mapStateToProps(state) {
     };
 }
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps)(Cart);
+function mapDispatchToProps(dispatch) {
+    return (0, _redux.bindActionCreators)({
+        deleteCartItem: _cartActions.deleteCartItem
+    }, dispatch);
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Cart);
 
 /***/ })
 /******/ ]);
