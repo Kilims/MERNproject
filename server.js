@@ -8,7 +8,7 @@ var port = process.env.PORT || 3000;
 //Middleware to define folder for static files
 app.use(express.static('public'));
 
-app.get('/', function(req, res){
+app.get('*', function(req, res){
     res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
 });
 
