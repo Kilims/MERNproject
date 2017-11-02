@@ -1,5 +1,11 @@
 "use strict"
 
+export function getCart() {
+    return {
+        type: "GET_CART"
+    }
+}
+
 export function addToCart(book) {
     return{
         type: "ADD_TO_CART",

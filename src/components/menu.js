@@ -1,8 +1,15 @@
 "use strict"
 import React from 'react'
 import {Nav, NavItem, Navbar, Badge} from 'react-bootstrap';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {getCart} from '../actions/cartActions';
 
 class Menu extends React.Component{
+    componentDidMount(){
+        this.props.getCart();
+    }
+
     render(){
         return(
             <Navbar inverse fixedTop>
@@ -21,7 +28,10 @@ class Menu extends React.Component{
                 <Nav pullRight>
                     <NavItem eventKey={1} href="/admin">Admin</NavItem>
                     <NavItem eventKey={2} href="/cart">Your Cart
-                        <Badge className="badge">1</Badge> </NavItem>
+                        { (this.props.totalQty > 0) ? (
+                            <Badge className="badge">{this.props.totalQty}</Badge>
+                            ) :('')}
+                    </NavItem>
                 </Nav>
                 </Navbar.Collapse>
             </Navbar>
@@ -29,4 +39,16 @@ class Menu extends React.Component{
     }
 }
 
-export default Menu;
+function mapStateToProps(state) {
+    return {
+        totalQty: state.cart.totalQty
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        getCart: getCart
+    }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);

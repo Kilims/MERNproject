@@ -7176,9 +7176,16 @@ var matchPath = function matchPath(pathname) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.getCart = getCart;
 exports.addToCart = addToCart;
 exports.deleteCartItem = deleteCartItem;
 exports.updateCart = updateCart;
+function getCart() {
+    return {
+        type: "GET_CART"
+    };
+}
+
 function addToCart(book) {
     return {
         type: "ADD_TO_CART",
@@ -60281,6 +60288,12 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactBootstrap = __webpack_require__(94);
 
+var _reactRedux = __webpack_require__(91);
+
+var _redux = __webpack_require__(72);
+
+var _cartActions = __webpack_require__(171);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -60299,6 +60312,11 @@ var Menu = function (_React$Component) {
     }
 
     _createClass(Menu, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.props.getCart();
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
@@ -60347,12 +60365,11 @@ var Menu = function (_React$Component) {
                             _reactBootstrap.NavItem,
                             { eventKey: 2, href: '/cart' },
                             'Your Cart',
-                            _react2.default.createElement(
+                            this.props.totalQty > 0 ? _react2.default.createElement(
                                 _reactBootstrap.Badge,
                                 { className: 'badge' },
-                                '1'
-                            ),
-                            ' '
+                                this.props.totalQty
+                            ) : ''
                         )
                     )
                 )
@@ -60363,7 +60380,19 @@ var Menu = function (_React$Component) {
     return Menu;
 }(_react2.default.Component);
 
-exports.default = Menu;
+function mapStateToProps(state) {
+    return {
+        totalQty: state.cart.totalQty
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return (0, _redux.bindActionCreators)({
+        getCart: _cartActions.getCart
+    }, dispatch);
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Menu);
 
 /***/ }),
 /* 735 */
