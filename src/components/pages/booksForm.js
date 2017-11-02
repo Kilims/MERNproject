@@ -11,6 +11,7 @@ class BooksForm extends React.Component{
 
     handleSubmit(){
         const book=[{
+            _id: this.props.books.length + 1,
             title: findDOMNode(this.refs.title).value,
             description: findDOMNode(this.refs.description).value,
             price: findDOMNode(this.refs.price).value
@@ -27,7 +28,7 @@ class BooksForm extends React.Component{
     render(){
         const booksList = this.props.books.map(function(booksArr) {
             return (
-                <option key={booksArr.id}>{booksArr._id}</option>
+                <option key={booksArr._id}>{booksArr._id}</option>
             )
         })
 

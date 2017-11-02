@@ -14947,6 +14947,7 @@ var BooksForm = function (_React$Component) {
         key: 'handleSubmit',
         value: function handleSubmit() {
             var book = [{
+                _id: this.props.books.length + 1,
                 title: (0, _reactDom.findDOMNode)(this.refs.title).value,
                 description: (0, _reactDom.findDOMNode)(this.refs.description).value,
                 price: (0, _reactDom.findDOMNode)(this.refs.price).value
@@ -14966,7 +14967,7 @@ var BooksForm = function (_React$Component) {
             var booksList = this.props.books.map(function (booksArr) {
                 return _react2.default.createElement(
                     'option',
-                    { key: booksArr.id },
+                    { key: booksArr._id },
                     booksArr._id
                 );
             });
