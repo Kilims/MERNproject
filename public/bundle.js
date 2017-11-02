@@ -60367,7 +60367,7 @@ var Menu = function (_React$Component) {
                             'Your Cart',
                             this.props.totalQty > 0 ? _react2.default.createElement(
                                 _reactBootstrap.Badge,
-                                { className: 'badge' },
+                                { className: 'badge', style: { marginLeft: '10px' } },
                                 this.props.totalQty
                             ) : ''
                         )
