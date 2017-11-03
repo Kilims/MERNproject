@@ -62,6 +62,32 @@ app.delete('/books/:_id', function(req, res) {
 });
 
 
+//----->>  Delete BOOKs  <<-----
+app.put('/books/:_id', function(req, res) {
+  var book = req.body;
+  var query = req.params._id;
+
+  var update = {
+    '$set':{
+      title: book.title,
+      description:book.description,
+      images: book.images,
+      price: book.price
+    }
+  };
+
+  var options = {new: true};
+
+  Books.findOneAndUpdate(query, update, options, function(err, books) {
+    if (err) {
+      throw err;
+    }
+    res.json(books);
+  })
+})
+
+
+
 app.get('*', function(req, res){
   res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
 });
