@@ -39,8 +39,15 @@ app.post('/books', function(req, res) {
   });
 });
 
-
-
+//----->>  Get BOOKs  <<-----
+app.get('/books', function(req, res) {
+  Books.find(function(err, books) {
+    if (err) {
+      throw err;
+    }
+    res.json(books)
+  });
+});
 
 
 
