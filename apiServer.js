@@ -120,7 +120,7 @@ app.get('/images', function(req, res) {
     files.forEach(function(file) {
       filesArr.push({name: file});
     });
-    res.json(files);
+    res.json(filesArr);
   })
 })
 
