@@ -11,7 +11,6 @@ class BooksForm extends React.Component{
 
     handleSubmit(){
         const book=[{
-            _id: this.props.books.length + 1,
             title: findDOMNode(this.refs.title).value,
             description: findDOMNode(this.refs.description).value,
             price: findDOMNode(this.refs.price).value

@@ -5,7 +5,7 @@ const webpack = require("webpack");
 module.exports = {
     entry: [
         'babel-polyfill',
-        './src/app.js'
+        './src/client.js'
     ],
     output: {
         path: path.join(__dirname, 'public'),

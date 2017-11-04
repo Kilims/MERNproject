@@ -62,7 +62,7 @@ app.delete('/books/:_id', function(req, res) {
 });
 
 
-//----->>  Delete BOOKs  <<-----
+//----->>  Update BOOKs  <<-----
 app.put('/books/:_id', function(req, res) {
   var book = req.body;
   var query = req.params._id;
