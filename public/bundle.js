@@ -7313,8 +7313,12 @@ var _axios2 = _interopRequireDefault(_axios);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function getBooks() {
-    return {
-        type: "GET_BOOKS"
+    return function (dispatch) {
+        _axios2.default.get("/books").then(function (response) {
+            dispatch({ type: "GET_BOOKS", payload: response.data });
+        }).catch(function (err) {
+            dispatch({ type: "GET_BOOKS_REJECTED", payload: err });
+        });
     };
 }
 
@@ -46473,17 +46477,7 @@ exports.booksReducers = booksReducers;
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function booksReducers() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { books: [{
-            _id: 1,
-            title: 'this is book title',
-            description: 'this is book des',
-            price: 111.12
-        }, {
-            _id: 2,
-            title: 'this is book title',
-            description: 'this is book des',
-            price: 222.22
-        }]
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { books: []
     };
     var action = arguments[1];
 
@@ -46491,7 +46485,7 @@ function booksReducers() {
         case "GET_BOOKS":
             // let books = state.books.concat(action.payload);
             // return {books};
-            return _extends({}, state, { books: [].concat(_toConsumableArray(state.books)) });
+            return _extends({}, state, { books: [].concat(_toConsumableArray(action.payload)) });
         case "POST_BOOK":
             // let books = state.books.concat(action.payload);
             // return {books};
