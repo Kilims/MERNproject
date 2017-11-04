@@ -7333,9 +7333,12 @@ function postBooks(book) {
 }
 
 function deleteBooks(id) {
-    return {
-        type: "DELETE_BOOK",
-        payload: id
+    return function (dispatch) {
+        _axios2.default.delete("/books/" + id).then(function (response) {
+            dispatch({ type: "DELETE_BOOK", payload: id });
+        }).catch(function (err) {
+            dispatch({ type: "DELETE_BOOK_REJECTED", payload: err });
+        });
     };
 }
 
