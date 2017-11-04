@@ -5,7 +5,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {findDOMNode} from 'react-dom';
 
-import {postBooks, deleteBooks, getBooks} from '../../actions/booksActions';
+import {postBooks, deleteBooks, getBooks, resetButton} from '../../actions/booksActions';
 import axios from 'axios';
 
 class BooksForm extends React.Component{
@@ -49,6 +49,16 @@ class BooksForm extends React.Component{
         let bookId = findDOMNode(this.refs.delete).value;
 
         this.props.deleteBooks(bookId);
+    }
+
+    resetForm(){
+        this.props.resetButton();
+
+        findDOMNode(this.refs.title).value = '';
+        findDOMNode(this.refs.description).value = '';
+        findDOMNode(this.refs.image).value = '';
+        findDOMNode(this.refs.price).value = '';
+        this.setState({img: ''});
     }
 
     render(){
@@ -106,7 +116,11 @@ class BooksForm extends React.Component{
                                     placeholder="Enter Price"
                                     ref="price" />
                             </FormGroup>
-                            <Button bsStyle="primary" onClick={this.handleSubmit.bind(this)} >Save Book</Button>
+                            <Button 
+                                bsStyle={(!this.props.style) ? ("primary") : (this.props.style)}
+                                onClick={(!this.props.msg) ? (this.handleSubmit.bind(this)) : (this.resetForm.bind(this))} >
+                                {(!this.props.msg) ? ("Save Book") : (this.props.msg)}
+                            </Button>
                         </Panel>
                         <Panel style={{marginTop: '25px'}}>
                             <FormGroup controlId="formControlsSelect">
@@ -128,7 +142,9 @@ class BooksForm extends React.Component{
 
 function mapStateToProps(state) {
     return {
-        books: state.books.books
+        books: state.books.books,
+        msg: state.books.msg,
+        style: state.books.style
     }
 }
 
@@ -136,7 +152,8 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         postBooks: postBooks,
         deleteBooks: deleteBooks,
-        getBooks: getBooks
+        getBooks: getBooks,
+        resetButton: resetButton
     }, dispatch);
 }
 
