@@ -15,25 +15,11 @@ import {postBooks, deleteBooks, updateBook} from './actions/booksActions';
 const middleware = applyMiddleware(thunk, logger);
 const store = createStore(reducers, middleware);
 
-import BooksList from './components/pages/booksList';
-import Cart from './components/pages/cart';
-import BooksForm from './components/pages/booksForm';
-import Menu from './components/menu';
-import Footer from './components/footer';
+import routes from './routes';
 
 const Routes = (
     <Provider store={store}>
-        <BrowserRouter>
-            <div>
-                <Menu />
-                    <Switch>
-                        <Route exact path="/" component={BooksList} />
-                        <Route path="/admin" component={BooksForm} />
-                        <Route path="/cart" component={Cart} />
-                    </Switch>
-                <Footer />
-            </div>
-        </BrowserRouter>
+        {routes}
     </Provider>
 )
 
