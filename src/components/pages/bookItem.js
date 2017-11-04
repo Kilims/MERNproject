@@ -6,6 +6,12 @@ import {bindActionCreators} from 'redux';
 import {addToCart, updateCart} from '../../actions/cartActions';
 
 class BookItem extends React.Component{
+    constructor(){
+        super();
+        this.state = {
+            isClicked: false
+        }
+    }
 
     handleCart(){
         const book = [...this.props.cart, {
@@ -37,16 +43,26 @@ class BookItem extends React.Component{
         
     }
 
+    onReadMore(){
+        this.setState({isClicked:true});
+    }
+
     render(){
         return(
             <Well>
                 <Row>
-                    <Col xs={12} sm={4}>
+                    <Col xs={12} sm={6}>
                         <Image src={this.props.images} responsive />
                     </Col>
-                    <Col xs={12} sm={4}>
+                    <Col xs={12} sm={6}>
                         <h6>{this.props.title}</h6>
-                        <p>{this.props.description}</p>
+                        <p>{(this.props.description.length > 50 && this.state.isClicked === false) ?
+                            (this.props.description.substring(0, 50)) : (this.props.description)}
+                            <button className='link' onClick={this.onReadMore.bind(this)}>
+                                {(this.state.isClicked === false && this.props.description !== null && this.props.description.length > 50) ?
+                                    ('...read more'):('')}
+                            </button>
+                        </p>
                         <h6>{this.props.price}</h6>
                         <Button bsStyle='primary' onClick={this.handleCart.bind(this)} >Buy now</Button>
                     </Col>
