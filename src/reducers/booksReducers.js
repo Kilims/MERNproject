@@ -1,7 +1,6 @@
 "use strict"
 
-export function booksReducers(state={books:
-    []
+export function booksReducers(state={books:[]
 }, action) {
     switch (action.type) {
         case "GET_BOOKS":

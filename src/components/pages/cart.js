@@ -36,12 +36,12 @@ class Cart extends React.Component{
     }
 
     onIncrement(_id){
-        this.props.updateCart(_id, 1);
+        this.props.updateCart(_id, 1, this.props.cart);
     }
 
     onDecrement(_id, quantity){
         if (quantity > 1) {
-            this.props.updateCart(_id, -1);
+            this.props.updateCart(_id, -1, this.props.cart);
         }     
     }
 
@@ -57,7 +57,7 @@ class Cart extends React.Component{
         return(<div></div>)
     }
 
-    renderCart(){
+    renderCart(){        
         const cartItemsList = this.props.cart.map(function(cartArr){
             return(
                 <Panel key={cartArr._id}>

@@ -9,6 +9,7 @@ class BookItem extends React.Component{
 
     handleCart(){
         const book = [...this.props.cart, {
+            _id:this.props._id,
             title: this.props.title,
             description: this.props.description,
             price: this.props.price,
@@ -26,7 +27,7 @@ class BookItem extends React.Component{
             if (cartIndex === -1) {
                 this.props.addToCart(book);
             } else {
-                this.props.updateCart(_id, 1);
+                this.props.updateCart(_id, 1, this.props.cart);
             }
         } else {
             //Cart is empty
