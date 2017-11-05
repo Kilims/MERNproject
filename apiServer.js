@@ -124,6 +124,69 @@ app.get('/images', function(req, res) {
   })
 })
 
+var ClientInfo = require('./models/clientInfo');
+//----->>  Get ClientInfo API  <<-----
+app.get('/clientInfo', function(req, res) {
+  ClientInfo.find(function(err, clientInfo) {
+    if (err) {
+      throw err;
+    }
+    res.json(clientInfo)
+  });
+});
+
+//----->>  Post ClientInfo  <<-----
+app.post('/clientInfo', function(req, res) {
+  var clientInfo = req.body;
+  ClientInfo.create(clientInfo, function(err, clientInfo) {
+    if (err) {
+      throw err;
+    } 
+    res.json(clientInfo);
+  });
+});
+
+//----->>  Update ClientInfo  <<-----
+app.put('/clientInfo/:_id', function(req, res) {
+  var clientInfo = req.body;
+  var query = req.params._id;
+
+  var update = {
+    '$set':{
+      clientName: clientInfo.clientName,
+      clientEmail: clientInfo.clientEmail,
+      clientPhoneNumber: clientInfo.clientPhoneNumber,
+      clientWechat: clientInfo.clientWechat,
+      port: clientInfo.port,
+      portPwd: clientInfo.portPwd,
+      serverIP: clientInfo.serverIP,
+      expireDate: clientInfo.expireDate,
+      payments_info: clientInfo.payments_info,
+      billDate: clientInfo.billDate
+    }
+  };
+  var options = {new: true};
+
+  ClientInfo.findOneAndUpdate(query, update, options, function(err, clientInfo) {
+    if (err) {
+      throw err;
+    }
+    res.json(clientInfo);
+  })
+});
+
+//----->>  Delete ClientInfo  <<-----
+app.delete('/clientInfo/:_id', function(req, res) {
+  var query = {_id: req.params._id};
+
+  ClientInfo.remove(query, function(err, clientInfo) {
+    if (err) {
+      console.log("# API DELETE ClientInfo: ", err)
+    }
+    res.json(clientInfo);
+  });
+});
+
 
 app.listen(3001, function(err) {
   if (err) {

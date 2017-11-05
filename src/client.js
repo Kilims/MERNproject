@@ -21,6 +21,8 @@ import BooksForm from './components/pages/booksForm';
 import Menu from './components/menu';
 import Footer from './components/footer';
 
+import ClientDetailsTable from './components/ssManagement/clientDetailsTable';
+
 const Routes = (
     <Provider store={store}>
         <BrowserRouter>
@@ -30,6 +32,7 @@ const Routes = (
                         <Route exact path="/" component={BooksList} />
                         <Route path="/admin" component={BooksForm} />
                         <Route path="/cart" component={Cart} />
+                        <Route path="/clientInfo" component={ClientDetailsTable} />
                     </Switch>
                 <Footer />
             </div>
