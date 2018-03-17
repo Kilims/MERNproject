@@ -2,12 +2,17 @@
 import React from 'react'
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {Grid, Row, Table, } from 'react-bootstrap';
+import {Grid, Row, Table, Button, Collapse, Col} from 'react-bootstrap';
 
 import { getClientInfo } from "../../actions/clientInfoActions";
-
+import ClientDetailsInputBox from './clientDetailsInputBox';
 
 class ClientDetailsTable extends React.Component{
+    constructor(){
+        super();
+        this.state = {};
+    }
+
     componentDidMount(){
         this.props.getClientInfo();
     }
@@ -32,7 +37,7 @@ class ClientDetailsTable extends React.Component{
         })
 
         return (
-            <Grid>
+            <Grid>                
                 <Row>
                     <Table striped bordered condensed hover>
                         <thead>
@@ -54,6 +59,20 @@ class ClientDetailsTable extends React.Component{
                             {clientInfo_list}
                             </tbody>
                     </Table>
+                </Row>
+                <Row>
+                    <Col>
+                        <Button onClick={() => this.setState({ open: !this.state.open })}>
+                            Add New Client
+                        </Button>
+                    </Col> 
+                    <Col>
+                        <Collapse in={this.state.open}>
+                            <div>
+                                {<ClientDetailsInputBox />}
+                            </div>
+                        </Collapse>
+                    </Col>                                                               
                 </Row>
             </Grid>
         )

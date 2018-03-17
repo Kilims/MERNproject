@@ -22,6 +22,7 @@ import Menu from './components/menu';
 import Footer from './components/footer';
 
 import ClientDetailsTable from './components/ssManagement/clientDetailsTable';
+import SelectSection from './components/ex/selectSection';
 
 const Routes = (
     <Provider store={store}>
@@ -32,7 +33,8 @@ const Routes = (
                         <Route exact path="/" component={BooksList} />
                         <Route path="/admin" component={BooksForm} />
                         <Route path="/cart" component={Cart} />
-                        <Route path="/clientInfo" component={ClientDetailsTable} />
+                        <Route path="/clientInfo" component={ClientDetailsTable} />                        
+                        <Route path="/ex" component={SelectSection} />  
                     </Switch>
                 <Footer />
             </div>
