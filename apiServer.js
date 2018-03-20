@@ -14,7 +14,7 @@ app.use(cookieParser());
 
 //APIS
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/bookshop');
+mongoose.connect('mongodb://kilims:password@localhost:27017/bookshop');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, '#MongoDB - connection error: '))
